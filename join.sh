@@ -1,23 +1,24 @@
 #!/bin/bash
-#1:Take turnstile data:
+#1:Read some turnstile data into a single file.
+rm ts_stations.txt ts_transfers.txt sample_ts_data.txt readyformerge.txt gt_ids_names.txt
 
-cp turnstile_data/turnstile_150711.txt ./turnstile_150711.txt
-cat turnstile_data/turnstile_141018.txt >> turnstile_150711.txt
+cp turnstile_data/turnstile_150711.txt ./sample_ts_data.txt
+cat turnstile_data/turnstile_141018.txt >> sample_ts_data.txt
 
-awk -f pp_turnstile.awk |  sort | uniq > ts2.txt
-awk -f diffids.awk > differentstopids.txt
+#2: TS DATA: Stations go to ts_stations.txt, all transfers go to ts_transfers.txt
+awk -f pp_turnstile.awk 
 
-#5: GTFS Data:
-#stops.txt
-awk -f pp_namesformerge.awk | cut -d, -f2 | sort | uniq > stops2.txt
-awk -f pp_namesformerge.awk | sort -r | uniq > modifiedstops.txt #Do we need stops2
-#8: (rm stops1.txt, rm stops2.txt)
+#3: gtfs data >> goes to gt_ids_names.txt
+awk -f pp_namesformerge.awk 
 
-python a_names_script_v2.py #(It goes to matchtable.txt)
-awk -f takethetop.awk #(goes to unmatchedwords.txt and easymatches.txt)
+
+python match_names.py #(It goes to matchtable.txt)
+
+awk -f takethetop.awk #(goes to unmatched.txt and matched.txt)
 awk -f smalledits.awk #(goes to readyformerge.txt)
 
-rm ./turnstile_150711.txt 
+rm matched.txt unmatched.txt 
+rm ./sample_ts_data.txt
 
 #12: Eiman's file:
 #../GoogleLineNames.csv

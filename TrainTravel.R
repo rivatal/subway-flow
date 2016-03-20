@@ -1,13 +1,19 @@
+###################################################################################
 #Eiman Ahmed
+#Produces TrainTravel.csv, which has the train, from station (name and id), to station (name and id), and time
+###################################################################################
 
 library(dplyr)
+setwd("~/subway-flow/gtfs_data/")
 #Reading in the information from stop_times.txt
 stop_times <- read.table("stop_times.txt",header=TRUE, 
                     sep=",",fill=TRUE,quote = "",row.names = NULL,
                     stringsAsFactors = FALSE) 
 
+
+setwd("~/subway-flow")
 #Reading in the information from stops.txt
-stops <- read.table("modifiedstops.txt",header=TRUE, 
+stops <- read.table("gt_ids_names.txt",header=TRUE, 
                          sep=",",fill=TRUE,quote = "",row.names = NULL,
                          stringsAsFactors = FALSE) 
 
@@ -22,6 +28,7 @@ stop_times$departure_time <- as.POSIXct(stop_times$departure_time, format='%H:%M
 stop_times_names <- inner_join(stop_times,stops)
 
 #Read in the information so that I have trips only 
+setwd("~/subway-flow/gtfs_data/")
 trips <- read.table("trips.txt",header=TRUE, 
                     sep=",",fill=TRUE,quote = "",row.names = NULL,
                     stringsAsFactors = FALSE) 
@@ -142,5 +149,6 @@ trains_info<- trains_info[complete.cases(trains_info),]
 trains_info <- data.frame(trains_info[,c(1,8,9,2,3,5)])
 names(trains_info) <- c("Train","FromStation",'FromStationID','ToStation','ToStationID',"TravelTime")
 
+
 #Export as R file - change the dir/file name per needs
-write.csv(trains_info, "/home/ewahmed/subway-flow/TrainTravel.csv")
+write.csv(trains_info, "~/subway-flow/TrainTravel.csv", quote = FALSE, row.names= FALSE)

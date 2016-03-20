@@ -1,6 +1,7 @@
 # Riva Tropp
 # 7/27/2015
 # Simple script to scale up exits to match entries for use in min-cost-flow algorithm.
+#Produces  f_noon, etc
 
 library(dplyr)
 library(dplyr)
@@ -97,10 +98,9 @@ write.csv(sub_wanted, "f_allday.csv",quote=FALSE)
 
 #Checking to make sure it's 0:
 
-new_sub2 %>% group_by(entry_exits_period) %>% 
-  summarise(sum_entries = sum(new_rounded_hourly_entries), sum_exits = sum(rounded_scaled_exits)) -> diff_sub
+#new_sub2 %>% group_by(entry_exits_period) %>% 
+#  summarise(sum_entries = sum(new_rounded_hourly_entries), sum_exits = sum(rounded_scaled_exits)) -> diff_sub
 
-diff_sub$diff <- diff_sub$sum_entries-diff_sub$sum_exits
+#diff_sub$diff <- diff_sub$sum_entries-diff_sub$sum_exits
 #head(diff_sub)
-
 

@@ -1,3 +1,7 @@
+#########################################################################################
+#Eiman
+#Produces OldGoogleLineNames.csv, which has the stop_id (station_id?), line name, and gtfs station
+######################################################################################
 library(dplyr)
 setwd("~/subway-flow/gtfs_data/")
 #Reading in the train sequences file
@@ -10,9 +14,10 @@ stop_times <- data.frame(stop_times[,c(1,2,3,4,5)])
 
 #Reading in train stations with their stop_ids file
 setwd("~/subway-flow/")
-stops <- read.table("modifiedstops.txt",header=TRUE, 
+stops <- read.table("gt_ids_names.txt",header=TRUE, 
                     sep=",",fill=TRUE,quote = "",row.names = NULL,
                     stringsAsFactors = FALSE) 
+
 
 #Joining the two data frames so that we know which trains go to which stops (only had ids before)
 stop_times_names <- inner_join(stop_times,stops)
@@ -111,9 +116,10 @@ train_stopid_lines <- data.frame(unique_train_lines[,c(1,3,5,7)])
 train_stopid_lines <- train_stopid_lines %>% group_by(Train) %>% arrange(StopID)
 train_stopid_lines <- train_stopid_lines[!duplicated(train_stopid_lines),] 
 
+
 #Loading unique transfer data (differentstopids)
 setwd("~/subway-flow/")
-transfers <- read.table("differentstopids.txt",header=TRUE, 
+transfers <- read.table("ts_transfers.txt",header=TRUE, 
                          sep=",",fill=TRUE,quote = "",row.names = NULL,
                          stringsAsFactors = FALSE) 
 #Renaming so we can join the transfer data to the train_stopid_lines dataframe
@@ -171,7 +177,7 @@ names(transfers_lines)<- c('stop_id','line_name')
 
 #Reading in train stations with their stop_ids file
 setwd("~/subway-flow/")
-stops <- read.table("modifiedstops.txt",header=TRUE, 
+stops <- read.table("gt_ids_names.txt",header=TRUE, 
                     sep=",",fill=TRUE,quote = "",row.names = NULL,
                     stringsAsFactors = FALSE) 
 

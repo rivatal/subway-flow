@@ -1,3 +1,8 @@
+#########################################################################################
+#Eiman
+#Produces GoogleLineNames.csv, which is, I believe, like OldGoogleLineNames.csv with lat and lon
+#"station_id","line_name","station","stop_lat","stop_lon"
+########################################################################################
 library(dplyr)
 #Reading in the information from stop_times.txt
 setwd("~/subway-flow/gtfs_data/")
@@ -7,7 +12,7 @@ stop_times <- read.table("stop_times.txt",header=TRUE,
 
 setwd("~/subway-flow")
 #Reading in the information from stops.txt
-stops <- read.table("modifiedstops.txt",header=TRUE, 
+stops <- read.table("gt_ids_names.txt",header=TRUE, 
                     sep=",",fill=TRUE,quote = "",row.names = NULL,
                     stringsAsFactors = FALSE) 
 
@@ -130,7 +135,7 @@ names(trains_info) <- c('train','train_stop','stop_id','station_name','time_trav
 
 #Reading in the line names data
 setwd("~/subway-flow")
-linenames <- read.table("new_google_data.txt",header=TRUE, 
+linenames <- read.table("OldGoogleLineNames.csv",header=TRUE, 
                         sep=",",fill=TRUE,quote = "",row.names = NULL,
                         stringsAsFactors = FALSE) 
 

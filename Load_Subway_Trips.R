@@ -20,7 +20,7 @@ source("trainnames.R")
 # modify subwaydata dataframe
 ######################################################################################################################
 allts <- read.csv("allts.csv", stringsAsFactors = FALSE)  # read csv file 
-subwaydata <- as.data.frame(allts) %>%select(-AEILMN) # drop aeilmn column
+subwaydata <- as.data.frame(allts) %>%select(-LINENAME) # drop aeilmn column
 
 # creating dataframe with num_entries, num_exits, and time difference
 names(subwaydata) <- tolower(names(subwaydata))
@@ -38,7 +38,7 @@ subwaydata <- arrange(subwaydata, date.time) %>%
 
 subwaydata <- filter(subwaydata, time.delta <= 12) 
 
-subwaydata$time
+#subwaydata$time
 # create time periods
 subwaydata <-subwaydata %>%
   mutate(entry_exits_period = as.character(ifelse(time > "0:00:00" & time <= "04:00:00", as.character("0:4"),
